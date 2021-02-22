@@ -32,6 +32,8 @@ columnSeparator = "|"
 
 items_table = [] #First Table
 seller_table = []
+bids_table = []
+bid_table = []
 
 # Dictionary of months used for date transformation
 MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',\
@@ -108,10 +110,19 @@ def parseJson(json_file):
             items_table.append('"' + '"|"'.join([item_id, name, currently, buy_price, first_bid, number_of_bids, 
                 location, country, started, ends, seller_id, description]) + '"\n')
             
-            
+            # Seller Table
             seller_rating = item['Seller']['Rating']
-
             seller_table.append('"' + '"|"'.join([seller_id, seller_rating]) + '"\n')
+
+            if item['Bids'] is not None:
+                for bid in item['Bids']:
+                    bid_id = str(len(bid_table) + 1)
+                    bidder = bid['Bid']['Bidder']['UserID']
+                    time = transformDttm(bid['Bid']['Time'])
+                    amount = transformDollar(bid['Bid']['Amount'])
+
+                    bid_table.append('"' + '"|"'.join([bid_id, bidder, time, amount]) + '"\n')
+                    bids_table.append('"' + '"|"'.join([bid_id, item_id]) + '"\n')
 
             # """
             # TODO: traverse the items dictionary to extract information from the
@@ -141,6 +152,13 @@ def main(argv):
 
     with open("Seller.dat", "w") as f: 
         f.write("".join(seller_table))  
+
+    with open("Bids.dat", "w") as f: 
+        f.write("".join(bids_table))
+
+    with open("Bid.dat", "w") as f: 
+        f.write("".join(bid_table))
+
     f.close()
 
 
