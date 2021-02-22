@@ -35,6 +35,7 @@ seller_table = []
 bids_table = []
 bid_table = []
 category_table = []
+bidder_table = []
 
 # Dictionary of months used for date transformation
 MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',\
@@ -84,11 +85,14 @@ def parseJson(json_file):
     with open(json_file, 'r') as f:
         items = loads(f.read())['Items'] # creates a Python dictionary of Items for the supplied json file
         for item in items:
-            
+            # """
+            # TODO: traverse the items dictionary to extract information from the
+            # given `json_file' and generate the necessary .dat files to generate
+            # the SQL tables based on your relation design
+            # """
             # Items Table
             item_id = item['ItemID']
             name = item['Name'].replace('"', '""')
-            # Add Category
             currently = transformDollar(item['Currently'])
             if "Buy_Price" in item:
                 buy_price = transformDollar(item['Buy_Price'])  
@@ -96,12 +100,10 @@ def parseJson(json_file):
                 buy_price = 'NULL'
             first_bid = transformDollar(item['First_Bid'])
             number_of_bids = item['Number_of_Bids']
-            # Add Bids
             location = item['Location']
             country = item['Country']
             started = transformDttm(item['Started'])
             ends = transformDttm(item['Ends'])
-            # Add Seller
             seller_id = item['Seller']['UserID']
             if item['Description'] is not None:
                 description = item['Description'].replace('"', '""')
@@ -119,22 +121,25 @@ def parseJson(json_file):
                 for bid in item['Bids']:
                     bid_id = str(len(bid_table) + 1)
                     bidder = bid['Bid']['Bidder']['UserID']
+                    if 'Location' in bid['Bid']['Bidder']:
+                        location = bid['Bid']['Bidder']['Location'] 
+                    else:
+                        location = "NULL"
+                    if 'Country' in bid['Bid']['Bidder']:
+                        country = bid['Bid']['Bidder']['Country']
+                    else:
+                        country = "NULL"
+                    rating = bid['Bid']['Bidder']['Rating']
                     time = transformDttm(bid['Bid']['Time'])
                     amount = transformDollar(bid['Bid']['Amount'])
 
-                    bid_table.append('"' + '"|"'.join([bid_id, bidder, time, amount]) + '"\n')
-                    bids_table.append('"' + '"|"'.join([bid_id, item_id]) + '"\n')
+                    bid_table.append('"' + '"|"'.join([bid_id, bidder, time, amount]) + '"\n') # Bid Table
+                    bids_table.append('"' + '"|"'.join([bid_id, item_id]) + '"\n') # Bids Table
+                    bidder_table.append('"' + '"|"'.join([bidder, rating, location, country])  + '"\n') # Bidder Table
 
+            # Category Table
             for cat in item['Category']:
-                category_table.append('"' + item_id + '"|"' + str(cat) + '"\n')
-            
-
-            # """
-            # TODO: traverse the items dictionary to extract information from the
-            # given `json_file' and generate the necessary .dat files to generate
-            # the SQL tables based on your relation design
-            # """
-            # pass
+                category_table.append('"' + item_id + '"|"' + str(cat) + '"\n')           
 
 """
 Loops through each json files provided on the command line and passes each file
@@ -166,6 +171,9 @@ def main(argv):
 
     with open("Category.dat", "w") as f: 
         f.write("".join(category_table))
+
+    with open("Bidder.dat", "w") as f: 
+        f.write("".join(bidder_table))
 
     f.close()
 
