@@ -31,6 +31,7 @@ from re import sub
 columnSeparator = "|"
 
 items_table = [] #First Table
+seller_table = []
 
 # Dictionary of months used for date transformation
 MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',\
@@ -98,15 +99,19 @@ def parseJson(json_file):
             started = transformDttm(item['Started'])
             ends = transformDttm(item['Ends'])
             # Add Seller
+            seller_id = item['Seller']['UserID']
             if item['Description'] is not None:
                 description = item['Description'].replace('"', '""')
             else:
                 description = ""
 
             items_table.append('"' + '"|"'.join([item_id, name, currently, buy_price, first_bid, number_of_bids, 
-                location, country, started, ends, description]) + '"\n')
-                
+                location, country, started, ends, seller_id, description]) + '"\n')
+            
+            
+            seller_rating = item['Seller']['Rating']
 
+            seller_table.append('"' + '"|"'.join([seller_id, seller_rating]) + '"\n')
 
             # """
             # TODO: traverse the items dictionary to extract information from the
@@ -132,7 +137,10 @@ def main(argv):
             print("Success parsing " + f)
 
     with open("Item.dat", "w") as f: 
-        f.write("".join(items_table)) 
+        f.write("".join(items_table))
+
+    with open("Seller.dat", "w") as f: 
+        f.write("".join(seller_table))  
     f.close()
 
 
