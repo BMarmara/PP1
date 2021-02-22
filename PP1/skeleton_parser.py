@@ -34,6 +34,7 @@ items_table = [] #First Table
 seller_table = []
 bids_table = []
 bid_table = []
+catagory_table = []
 
 # Dictionary of months used for date transformation
 MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',\
@@ -124,6 +125,10 @@ def parseJson(json_file):
                     bid_table.append('"' + '"|"'.join([bid_id, bidder, time, amount]) + '"\n')
                     bids_table.append('"' + '"|"'.join([bid_id, item_id]) + '"\n')
 
+            for cat in item['Category']:
+                catagory_table.append('"' + item_id + '"|"' + str(cat) + '"\n')
+            
+
             # """
             # TODO: traverse the items dictionary to extract information from the
             # given `json_file' and generate the necessary .dat files to generate
@@ -158,6 +163,9 @@ def main(argv):
 
     with open("Bid.dat", "w") as f: 
         f.write("".join(bid_table))
+
+    with open("Catagory.dat", "w") as f: 
+        f.write("".join(catagory_table))
 
     f.close()
 
