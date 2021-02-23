@@ -1,0 +1,3 @@
+SELECT COUNT(DISTINCT Item.UserID)
+FROM Item
+WHERE SellerRating > 1000;
