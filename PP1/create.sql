@@ -22,8 +22,8 @@ CREATE TABLE Person(
     UserID VARCHAR(255) not null,
     Rating DECIMAL not null,
     Location VARCHAR(255),
-    Country VARCHAR(255),
-    PRIMARY KEY(UserID)
+    Country VARCHAR(255)
+    -- PRIMARY KEY(UserID)
 );
 
 CREATE TABLE Bid(
@@ -31,13 +31,13 @@ CREATE TABLE Bid(
     ItemID INTEGER not null,
     Time DATETIME not null,
     Amount VARCHAR(255),
-    PRIMARY KEY(UserID),
+    -- PRIMARY KEY(UserID),
     FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
 
 CREATE TABLE Category(
     ItemID INTEGER not null,
     Category VARCHAR(255) not null,
-    PRIMARY KEY(ItemID),
+    -- PRIMARY KEY(ItemID),
     FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
