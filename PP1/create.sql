@@ -10,6 +10,7 @@ CREATE TABLE Item(
     Buy_Price VARCHAR(255),
     First_Bid VARCHAR(255) not null,
     Number_of_Bids DECIMAL not null,
+    Location VARCHAR(255) not null,
     Started VARCHAR(255) not null,
     Ends TIME not null,
     UserID VARCHAR(255) not null,
