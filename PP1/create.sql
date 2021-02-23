@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Person;
 DROP TABLE IF EXISTS Bid;
-DROP TABLE IF EXISTS Bidder;
 DROP TABLE IF EXISTS Category;
 
 CREATE TABLE Item(
@@ -24,6 +23,8 @@ CREATE TABLE Item(
 CREATE TABLE Person(
     userId VARCHAR(255) not null,
     rating DECIMAL not null,
+    bidderLocation VARCHAR(255),
+    country VARCHAR(255),
     PRIMARY KEY(userId)
 );
 
@@ -34,14 +35,6 @@ CREATE TABLE Bid(
     amount VARCHAR(255),
     PRIMARY KEY(bidder),
     FOREIGN KEY(itemId) REFERENCES Item(itemId)
-);
-
-CREATE TABLE Bidder(
-    userId VARCHAR(255),
-    rating DECIMAL not null,
-    bidderLocation VARCHAR(255),
-    country VARCHAR(255),
-    PRIMARY KEY(userId)
 );
 
 CREATE TABLE Category(
