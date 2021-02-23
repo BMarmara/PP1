@@ -12,7 +12,7 @@ CREATE TABLE Item(
     First_Bid VARCHAR(255) not null,
     Number_of_Bids DECIMAL not null,
     Started VARCHAR(255) not null,
-    Ended TIME not null,
+    Ends TIME not null,
     Description TEXT not null,
     PRIMARY KEY(ItemID),
     FOREIGN KEY(UserID) REFERENCES Person(UserID)
@@ -29,7 +29,7 @@ CREATE TABLE Person(
 CREATE TABLE Bid(
     UserID VARCHAR(255) not null, 
     ItemID INTEGER not null,
-    Time TIME not null,
+    Time DATETIME not null,
     Amount VARCHAR(255),
     PRIMARY KEY(UserID),
     FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
