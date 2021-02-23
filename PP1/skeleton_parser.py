@@ -113,7 +113,7 @@ def parseJson(json_file):
 
             if item['Bids'] is not None:
                 for bid in item['Bids']:
-                    bidder = bid['Bid']['Bidder']['UserID']
+                    user_id = bid['Bid']['Bidder']['UserID']
                     if 'Location' in bid['Bid']['Bidder']:
                         location = bid['Bid']['Bidder']['Location'] 
                     else:
@@ -126,8 +126,8 @@ def parseJson(json_file):
                     time = transformDttm(bid['Bid']['Time'])
                     amount = transformDollar(bid['Bid']['Amount'])
 
-                    bid_table.append('"' + '"|"'.join([item_id, bidder, time, amount]) + '"\n') # Bid Table
-                    person_table.append('"' + '"|"'.join([bidder, rating, location, country])  + '"\n') # Bidder Table
+                    bid_table.append('"' + '"|"'.join([item_id, user_id, time, amount]) + '"\n') # Bid Table
+                    person_table.append('"' + '"|"'.join([user_id, rating, location, country])  + '"\n') # Bidder Table
 
             # Category Table
             for cat in item['Category']:
