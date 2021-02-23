@@ -32,7 +32,6 @@ columnSeparator = "|"
 
 items_table = [] #First Table
 seller_table = []
-bids_table = []
 bid_table = []
 category_table = []
 bidder_table = []
@@ -119,7 +118,6 @@ def parseJson(json_file):
 
             if item['Bids'] is not None:
                 for bid in item['Bids']:
-                    bid_id = str(len(bid_table) + 1)
                     bidder = bid['Bid']['Bidder']['UserID']
                     if 'Location' in bid['Bid']['Bidder']:
                         location = bid['Bid']['Bidder']['Location'] 
@@ -133,8 +131,7 @@ def parseJson(json_file):
                     time = transformDttm(bid['Bid']['Time'])
                     amount = transformDollar(bid['Bid']['Amount'])
 
-                    bid_table.append('"' + '"|"'.join([bid_id, bidder, time, amount]) + '"\n') # Bid Table
-                    bids_table.append('"' + '"|"'.join([bid_id, item_id]) + '"\n') # Bids Table
+                    bid_table.append('"' + '"|"'.join([item_id, bidder, time, amount]) + '"\n') # Bid Table
                     bidder_table.append('"' + '"|"'.join([bidder, rating, location, country])  + '"\n') # Bidder Table
 
             # Category Table
@@ -162,9 +159,6 @@ def main(argv):
 
     with open("Seller.dat", "w") as f: 
         f.write("".join(seller_table))  
-
-    with open("Bids.dat", "w") as f: 
-        f.write("".join(bids_table))
 
     with open("Bid.dat", "w") as f: 
         f.write("".join(bid_table))
