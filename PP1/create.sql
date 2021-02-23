@@ -4,42 +4,40 @@ DROP TABLE IF EXISTS Bid;
 DROP TABLE IF EXISTS Category;
 
 CREATE TABLE Item(
-    itemId INTEGER not null, 
-    userId VARCHAR(255) not null,
-    itemName VARCHAR(255) not null,
-    currently VARCHAR(255) not null,
-    buy_price VARCHAR(255),
-    first_bid VARCHAR(255) not null,
-    number_of_bids DECIMAL not null,
-    itemLocation VARCHAR(255),
-    country VARCHAR(255),
-    itemStarted VARCHAR(255) not null,
-    itemEnded TIME not null,
-    itemDescription TEXT not null,
-    PRIMARY KEY(itemId),
-    FOREIGN KEY(userId) REFERENCES Bids(userId)
+    ItemID INTEGER not null, 
+    UserID VARCHAR(255) not null,
+    Name VARCHAR(255) not null,
+    Currently VARCHAR(255) not null,
+    Buy_Price VARCHAR(255),
+    First_Bid VARCHAR(255) not null,
+    Number_of_Bids DECIMAL not null,
+    Started VARCHAR(255) not null,
+    Ended TIME not null,
+    Description TEXT not null,
+    PRIMARY KEY(ItemID),
+    FOREIGN KEY(UserID) REFERENCES Person(UserID)
 );
 
 CREATE TABLE Person(
-    userId VARCHAR(255) not null,
-    rating DECIMAL not null,
-    bidderLocation VARCHAR(255),
-    country VARCHAR(255),
-    PRIMARY KEY(userId)
+    UserID VARCHAR(255) not null,
+    Rating DECIMAL not null,
+    Location VARCHAR(255),
+    Country VARCHAR(255),
+    PRIMARY KEY(UserID)
 );
 
 CREATE TABLE Bid(
-    bidder VARCHAR(255) not null, 
-    itemId INTEGER not null,
-    bidTime TIME not null,
-    amount VARCHAR(255),
-    PRIMARY KEY(bidder),
-    FOREIGN KEY(itemId) REFERENCES Item(itemId)
+    UserID VARCHAR(255) not null, 
+    ItemID INTEGER not null,
+    Time TIME not null,
+    Amount VARCHAR(255),
+    PRIMARY KEY(UserID),
+    FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
 
 CREATE TABLE Category(
-    itemId INTEGER not null,
-    category VARCHAR(255) not null,
-    PRIMARY KEY(itemId),
-    FOREIGN KEY(itemId) REFERENCES Item(itemId)
+    ItemID INTEGER not null,
+    Category VARCHAR(255) not null,
+    PRIMARY KEY(ItemID),
+    FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
