@@ -127,7 +127,7 @@ def parseJson(json_file):
                     amount = transformDollar(bid['Bid']['Amount'])
 
                     bid_table.append('"' + '"|"'.join([item_id, user_id, time, amount]) + '"\n') # Bid Table
-                    person_table.append('"' + '"|"'.join([user_id, rating, location, country])  + '"\n') # Bidder Table
+                    person_table.append('"' + '"|"'.join([user_id, rating, location, country])  + '"\n') # Person Table
 
             # Category Table
             for cat in item['Category']:
