@@ -95,6 +95,10 @@ def parseJson(json_file):
                 buy_price = 'NULL'
             first_bid = transformDollar(item['First_Bid'])
             number_of_bids = item['Number_of_Bids']
+            if item['Location'] is not None:
+                Location = item['Location'].replace('"', '""')
+            else:
+                Location = ""
             started = transformDttm(item['Started'])
             ends = transformDttm(item['Ends'])
             seller_id = item['Seller']['UserID']
@@ -104,7 +108,7 @@ def parseJson(json_file):
                 description = ""
 
             items_table.append('"' + '"|"'.join([item_id, name, currently, buy_price, first_bid, number_of_bids, 
-                started, ends, seller_id, description]) + '"\n')
+                Location, started, ends, seller_id, description]) + '"\n')
 
             if item['Bids'] is not None:
                 for bid in item['Bids']:
