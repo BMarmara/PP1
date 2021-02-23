@@ -14,6 +14,7 @@ CREATE TABLE Item(
     Started VARCHAR(255) not null,
     Ends TIME not null,
     UserID VARCHAR(255) not null,
+    SellerRating Integer not null,
     Description TEXT not null,
     PRIMARY KEY(ItemID),
     FOREIGN KEY(UserID) REFERENCES Person(UserID)
