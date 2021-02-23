@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Category;
 CREATE TABLE Item(
     ItemID INTEGER not null, 
     Name VARCHAR(255) not null,
-    Currently VARCHAR(255) not null,
+    Currently Integer not null,
     Buy_Price VARCHAR(255),
     First_Bid VARCHAR(255) not null,
     Number_of_Bids DECIMAL not null,
