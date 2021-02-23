@@ -31,10 +31,9 @@ from re import sub
 columnSeparator = "|"
 
 items_table = [] #First Table
-seller_table = []
 bid_table = []
 category_table = []
-bidder_table = []
+person_table = []
 
 # Dictionary of months used for date transformation
 MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',\
@@ -111,10 +110,6 @@ def parseJson(json_file):
 
             items_table.append('"' + '"|"'.join([item_id, name, currently, buy_price, first_bid, number_of_bids, 
                 location, country, started, ends, seller_id, description]) + '"\n')
-            
-            # Seller Table
-            seller_rating = item['Seller']['Rating']
-            seller_table.append('"' + '"|"'.join([seller_id, seller_rating]) + '"\n')
 
             if item['Bids'] is not None:
                 for bid in item['Bids']:
@@ -132,7 +127,7 @@ def parseJson(json_file):
                     amount = transformDollar(bid['Bid']['Amount'])
 
                     bid_table.append('"' + '"|"'.join([item_id, bidder, time, amount]) + '"\n') # Bid Table
-                    bidder_table.append('"' + '"|"'.join([bidder, rating, location, country])  + '"\n') # Bidder Table
+                    person_table.append('"' + '"|"'.join([bidder, rating, location, country])  + '"\n') # Bidder Table
 
             # Category Table
             for cat in item['Category']:
@@ -155,10 +150,7 @@ def main(argv):
             print("Success parsing " + f)
 
     with open("Item.dat", "w") as f: 
-        f.write("".join(items_table))
-
-    with open("Seller.dat", "w") as f: 
-        f.write("".join(seller_table))  
+        f.write("".join(items_table)) 
 
     with open("Bid.dat", "w") as f: 
         f.write("".join(bid_table))
@@ -166,8 +158,8 @@ def main(argv):
     with open("Category.dat", "w") as f: 
         f.write("".join(category_table))
 
-    with open("Bidder.dat", "w") as f: 
-        f.write("".join(bidder_table))
+    with open("Person.dat", "w") as f: 
+        f.write("".join(person_table))
 
     f.close()
 
