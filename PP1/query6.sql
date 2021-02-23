@@ -1,0 +1,4 @@
+SELECT(COUNT(DISTINCT Item.UserId))
+FROM Item
+INNER JOIN Bid
+ON Item.UserId = Bid.UserId
