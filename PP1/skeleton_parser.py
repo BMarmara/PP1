@@ -149,7 +149,6 @@ def main(argv):
         print('Usage: python skeleton_json_parser.py <path to json files>', file=sys.stderr)
         sys.exit(1)
 
-    # initDicts()
     # loops over all .json files in the argument
     for f in argv[1:]:
         if isJson(f):
@@ -169,7 +168,6 @@ def main(argv):
         f.write("".join(person_table))
 
     f.close()
-
 
 if __name__ == '__main__':
     main(sys.argv)
