@@ -129,6 +129,13 @@ def parseJson(json_file):
                     bid_table.append('"' + '"|"'.join([item_id, user_id, time, amount]) + '"\n') # Bid Table
                     person_table.append('"' + '"|"'.join([user_id, rating, location, country])  + '"\n') # Person Table
 
+            if item['Seller']['UserID'] not in person_table:
+                user_id = item['Seller']['UserID']
+                rating = item['Seller']['Rating']
+                location = item['Location'].replace('"', '""')
+                country = item['Country']
+                person_table.append('"' + '"|"'.join([user_id, rating, location, country])  + '"\n')
+
             # Category Table
             for cat in item['Category']:
                 category_table.append('"' + item_id + '"|"' + str(cat) + '"\n')           
