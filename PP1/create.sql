@@ -40,6 +40,6 @@ CREATE TABLE Bid(
 CREATE TABLE Category(
     ItemID INTEGER not null,
     Category VARCHAR(255) not null,
-    -- PRIMARY KEY(ItemID),
+    PRIMARY KEY(ItemId, Category),
     FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
