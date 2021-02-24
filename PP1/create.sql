@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS Category;
 CREATE TABLE Item(
     ItemID INTEGER not null, 
     Name VARCHAR(255) not null,
-    Currently Integer not null,
-    Buy_Price VARCHAR(255),
-    First_Bid VARCHAR(255) not null,
+    Currently DECIMAL not null,
+    Buy_Price DECIMAL,
+    First_Bid DECIMAL not null,
     Number_of_Bids DECIMAL not null,
     Location VARCHAR(255) not null,
     Started VARCHAR(255) not null,
@@ -32,7 +32,7 @@ CREATE TABLE Bid(
     ItemID INTEGER not null,
     UserID VARCHAR(255) not null,     
     Time DATETIME not null,
-    Amount VARCHAR(255),
+    Amount DECIMAL,
     -- PRIMARY KEY(UserID),
     FOREIGN KEY(ItemID) REFERENCES Item(ItemID)
 );
